@@ -5,8 +5,8 @@ import addSeconds from "date-fns/add_seconds";
 import addHours from "date-fns/add_hours";
 import addDays from "date-fns/add_days";
 import differenceInMilliseconds from "date-fns/difference_in_milliseconds";
-import differenceInSeconds from "date-fns/difference_in_seconds";
 import * as constants from "../../constants";
+import { min } from "date-fns";
 
 class CountdownTimer extends Component {
     constructor(props) {
@@ -18,40 +18,85 @@ class CountdownTimer extends Component {
             seconds: 0,
         };
         this.calculateCountdownDate = this.calculateCountdownDate.bind(this);
+        this.setTimeRemaining = this.setTimeRemaining.bind(this);
         this.stop = this.stop.bind(this);
+        this.step = this.step.bind(this);
     }
 
     componentDidMount() {
         const countdownDate = this.calculateCountdownDate();
-        console.log(countdownDate, "countdown");
+        console.log(countdownDate);
+        const difference = differenceInMilliseconds(countdownDate, Date.now());
+        const setTimeRemaining = this.setTimeRemaining;
+        this.setTimeRemaining(difference);
         let interval = 1000;
+        let expectedDifference = difference - interval; //59 - 1 = 58
 
-        this.interval = setInterval(() => {
-            const difference = differenceInMilliseconds(countdownDate, Date.now())
-            console.log(difference);
-            if (difference > 0) {
-                const seconds = difference / 1000;
-                const minutes = seconds / 60;
-                const hours = minutes / 60;
-                const days = hours / 24;
-                this.setState({
-                    days: Math.floor(days),
-                    hours: Math.floor(hours),
-                    minutes: Math.floor(minutes),
-                    seconds: Math.floor(seconds),
-                });
-            } else {
-                this.stop();
-            }
-        }, 1000);
+        setTimeout(step, interval);
+
+        function step() {
+            const deltaTime = differenceInMilliseconds(countdownDate, Date.now());
+            setTimeRemaining(deltaTime);
+            const elapsed = expectedDifference - deltaTime;
+            console.log(elapsed);
+            expectedDifference -= elapsed;
+            console.log(interval);
+            setTimeout(step, interval - elapsed);
+        }
     }
-
+    
     componentWillUnmount() {
         this.stop();
     }
 
     stop() {
         clearInterval(this.interval)
+    }
+
+    setTimeRemaining(milliseconds) {
+        let remainder = milliseconds;
+        let days= "00";
+        let hours = "00";
+        let minutes = "00";
+        let seconds = "00";
+
+        function normalizeTime(time) {
+            if (time < 10) {
+                return time.toFixed(0).padStart(2, "0");
+            } else {
+                return time;
+            }
+        }
+
+        if (remainder >= constants.DAYS_TO_MS) {
+            console.log(remainder, "remainder");
+            days = Math.floor(remainder / constants.DAYS_TO_MS);
+            console.log(days, "days");
+            remainder %= constants.DAYS_TO_MS;
+            console.log(remainder, "remainderafter")
+        }
+
+        if (remainder >= constants.HOURS_TO_MS) {
+            hours = normalizeTime(Math.floor(remainder / constants.HOURS_TO_MS));
+            remainder %= constants.HOURS_TO_MS;
+        }
+
+        if (remainder >= constants.MINUTES_TO_MS) {
+            minutes = normalizeTime(Math.floor(remainder / constants.MINUTES_TO_MS));
+            remainder %= constants.MINUTES_TO_MS;
+        }
+
+        if (remainder >= constants.SECONDS_TO_MS) {
+            seconds = normalizeTime(Math.floor(remainder / constants.SECONDS_TO_MS));
+            remainder %= constants.SECONDS_TO_MS;
+        }
+
+        this.setState({
+            days: days,
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds,
+        });
     }
 
     calculateCountdownDate() {
@@ -66,10 +111,6 @@ class CountdownTimer extends Component {
             case constants.DAYS:
                 return addDays(Date.now(), timeIncrement);
         }
-    }
-
-    start() {
-        const date = this.props.date;
     }
 
     render() {
