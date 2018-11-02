@@ -1,0 +1,54 @@
+.App {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 350px) {
+    html {
+        font-size: 16px;
+    }
+
+    .App {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .App {
+        flex-direction: column;
+    }
+
+    .Container {
+        width: 100vw;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    html {
+        font-size: 21px;
+    }
+}
+
+@media screen and (min-width: 1024px){
+    html {
+        font-size: 21px;
+    }
+
+    .App {
+        flex-direction: row;
+    }
+
+    .Container {
+        width: 50vw;
+        height: 100vh;
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "remind-me",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wahuh/remind-me.git"
+  },
+  "author": "'Thanh <'tmdoan98@gmail.com'>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wahuh/remind-me/issues"
+  },
+  "homepage": "https://github.com/Wahuh/remind-me#readme",
+  "dependencies": {
+    "date-fns": "^1.29.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.7",
+    "postcss-modules": "^1.4.1",
+    "sass": "^1.14.3"
+  }
+}
