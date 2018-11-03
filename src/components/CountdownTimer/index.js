@@ -6,21 +6,19 @@ import addHours from "date-fns/add_hours";
 import addDays from "date-fns/add_days";
 import differenceInMilliseconds from "date-fns/difference_in_milliseconds";
 import * as constants from "../../constants";
-import { min } from "date-fns";
 
 class CountdownTimer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             days: 0,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
+            hours: "00",
+            minutes: "00",
+            seconds: "00",
         };
         this.calculateCountdownDate = this.calculateCountdownDate.bind(this);
         this.setTimeRemaining = this.setTimeRemaining.bind(this);
         this.stop = this.stop.bind(this);
-        this.step = this.step.bind(this);
     }
 
     componentDidMount() {
@@ -28,25 +26,26 @@ class CountdownTimer extends Component {
         console.log(countdownDate);
         const difference = differenceInMilliseconds(countdownDate, Date.now());
         const setTimeRemaining = this.setTimeRemaining;
-        this.setTimeRemaining(difference);
-        let interval = 1000;
-        let expectedDifference = difference - interval; //59 - 1 = 58
+        setTimeRemaining(difference);
+        const interval = 1000;
+        let expectedDifference = difference - interval;
 
         setTimeout(step, interval);
 
         function step() {
             const deltaTime = differenceInMilliseconds(countdownDate, Date.now());
-            setTimeRemaining(deltaTime);
-            const elapsed = expectedDifference - deltaTime;
-            console.log(elapsed);
-            expectedDifference -= elapsed;
-            console.log(interval);
-            setTimeout(step, interval - elapsed);
+            if (deltaTime > 0) {
+                setTimeRemaining(deltaTime);
+                const elapsed = expectedDifference - deltaTime;
+                console.log(elapsed, "elapsed");
+                expectedDifference -= elapsed;
+                console.log(expectedDifference, "expected");
+                setTimeout(step, interval - elapsed);
+            }
         }
     }
-    
+
     componentWillUnmount() {
-        this.stop();
     }
 
     stop() {
@@ -55,10 +54,10 @@ class CountdownTimer extends Component {
 
     setTimeRemaining(milliseconds) {
         let remainder = milliseconds;
-        let days= "00";
-        let hours = "00";
-        let minutes = "00";
-        let seconds = "00";
+        let days;
+        let hours;
+        let minutes;
+        let seconds;
 
         function normalizeTime(time) {
             if (time < 10) {
@@ -69,27 +68,37 @@ class CountdownTimer extends Component {
         }
 
         if (remainder >= constants.DAYS_TO_MS) {
-            console.log(remainder, "remainder");
             days = Math.floor(remainder / constants.DAYS_TO_MS);
-            console.log(days, "days");
             remainder %= constants.DAYS_TO_MS;
-            console.log(remainder, "remainderafter")
+        } else {
+            days = "00";
         }
 
         if (remainder >= constants.HOURS_TO_MS) {
             hours = normalizeTime(Math.floor(remainder / constants.HOURS_TO_MS));
             remainder %= constants.HOURS_TO_MS;
+        } else {
+            hours = "00";
         }
 
         if (remainder >= constants.MINUTES_TO_MS) {
             minutes = normalizeTime(Math.floor(remainder / constants.MINUTES_TO_MS));
             remainder %= constants.MINUTES_TO_MS;
+        } else {
+            minutes = "00";
         }
 
         if (remainder >= constants.SECONDS_TO_MS) {
+            console.log(remainder);
             seconds = normalizeTime(Math.floor(remainder / constants.SECONDS_TO_MS));
+            console.log(seconds, "seconds");
             remainder %= constants.SECONDS_TO_MS;
+            console.log("after remainder", remainder);
+        } else {
+            seconds = "00";
         }
+
+        //if days is undef... etc
 
         this.setState({
             days: days,
@@ -115,17 +124,29 @@ class CountdownTimer extends Component {
 
     render() {
         const {seconds, minutes, hours, days} = this.state;
-
         return (
             <div className={styles.CountdownTimer}>
-                <div>{days}</div>
-                <div>d:</div>
-                <div>{hours}</div>
-                <div>h:</div>
-                <div>{minutes}</div>
-                <div>m:</div>
-                <div>{seconds}</div>
-                <div>s</div>
+
+                <div className={styles.TimeContainer}>
+                    <div>{days}</div>
+                    <div>d:</div>
+                </div>
+
+                <div className={styles.TimeContainer}>
+                    <div>{hours}</div>
+                    <div>h:</div>
+                </div>
+
+                <div className={styles.TimeContainer}>
+                    <div>{minutes}</div>
+                    <div>m:</div>
+                </div>
+                
+                <div className={styles.TimeContainer}>
+                    <div>{seconds}</div>
+                    <div>s</div>
+                </div>
+
             </div>
         );
     }

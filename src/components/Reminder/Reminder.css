@@ -1,0 +1,22 @@
+.Reminder {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #f5f6fa;
+    padding: 1rem;
+}
+
+.ReminderMessage {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.ReminderTimer {
+    width: 50%;
+}

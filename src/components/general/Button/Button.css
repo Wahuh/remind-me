@@ -1,7 +1,7 @@
 .Button {
     display: inline-block;
     border: none;
-    padding: 1rem 2rem;
+    padding: 0;
     margin: 0;
     text-decoration: none;
     background: #0069ed;
@@ -18,12 +18,11 @@
 
 button:hover,
 button:focus {
-    background: #0053ba;
+
 }
 
 button:focus {
-    outline: 1px solid #fff;
-    outline-offset: -4px;
+
 }
 
 button:active {

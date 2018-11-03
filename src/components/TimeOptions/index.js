@@ -1,48 +1,34 @@
-import React, { Component } from "react";
-import Select from "../general/Select";
+import React, { Fragment } from "react";
 import * as constants from "../../constants";
-import TimeIncrementPicker from "../TimeIncrementPicker";
+import NumberPicker from "../NumberPicker";
+import IncrementPicker from "../IncrementPicker";
+import styles from "./TimeOptions.css";
 
-class TimeOptions extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            timeIncrement: ""
-        };
-    }
-
-    render() {
-        let options;
+const TimeOptions = (props) => {
         let picker;
-        
-        const { mode } = this.props;
+        const { 
+            mode, 
+            timeIncrement, 
+            onChangeIncrementType, 
+            onChangeTimeIncrement
+        } = props;
 
-        if (mode === constants.EVERY) {
-            options = [
-    
-            ]
-        } else if (mode === constants.AT) {
-            options = [
-                
-            ]
+        if (mode === constants.AT) {
+
         } else {
-            options = [
-                {name: "minutes", value: constants.MINUTES},
-                {name: "seconds", value: constants.SECONDS},
-                {name: "hours", value: constants.HOURS},
-                {name: "days", value: constants.DAYS},
-                {name: "years - really?", value: constants.YEARS}
-            ]
-            picker = <TimeIncrementPicker value={this.props.timeIncrement} onChange={this.props.onChangeTimeIncrement} />;
+            picker = (
+                <Fragment>
+                    <NumberPicker value={timeIncrement} onChange={onChangeTimeIncrement} />
+                    <IncrementPicker onChange={onChangeIncrementType}/>
+                </Fragment>
+            );
         }
     
         return (
-            <div>
+            <div className={styles.TimeOptions}>
                 {picker}
-            <Select onChange={this.props.onChangeIncrementType} options={options} />
             </div>
         );
-    }
 }
 
 export default TimeOptions;

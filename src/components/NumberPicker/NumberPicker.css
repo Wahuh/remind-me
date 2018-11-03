@@ -1,0 +1,27 @@
+.NumberPicker {
+
+}
+
+.NumberPickerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+}
+
+.AddButton {
+    padding: 0.3rem;
+    fill: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MinusButton {
+    padding: 0.3rem;
+    fill: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,11 @@
+.TimeOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+
+.IncrementPicker {
+    margin: 0.5rem;
+}

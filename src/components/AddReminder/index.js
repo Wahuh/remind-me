@@ -4,6 +4,8 @@ import ReminderOptions from "../ReminderOptions";
 import TimeOptions from "../TimeOptions";
 import Message from "../Message";
 import styles from "./AddReminder.css";
+import PlusIcon from "../general/PlusIcon";
+import Typography from "../general/Typography";
 import * as constants from "../../constants";
 
 
@@ -16,7 +18,11 @@ class AddReminder extends Component {
                 message: "",
                 timeIncrement: 0,
                 incrementType: constants.MINUTES,
-            }
+            },
+            error: {
+                exists: false,
+                type: "",
+            },
         };
 
         this.changeMode = this.changeMode.bind(this);
@@ -42,11 +48,12 @@ class AddReminder extends Component {
         });
     }
 
-    changeTimeIncrement(event) {
+    changeTimeIncrement(value) {
+        console.log(value);
         this.setState({
             reminder: {
                 ...this.state.reminder,
-                timeIncrement: event.target.value,
+                timeIncrement: value,
             }
         });
     }
@@ -62,23 +69,51 @@ class AddReminder extends Component {
 
     addReminder() {
         console.log(this.state.reminder);
-        this.props.onAdd(this.state.reminder);
-        this.setState({
-            reminder: {
-                ...this.state.reminder,
-                message: "",
-                timeIncrement: 0,
-            }
-        })
+        if (!this.state.reminder.message) {
+            console.log("Please enter a message");
+            this.setState({
+                error: {
+                    ...this.state.error,
+                    exists: true,
+                    type: constants.TIME_ERROR,
+                }
+            });
+        } else if (!this.state.reminder.timeIncrement) {
+            this.setState({
+                error: {
+                    ...this.state.error,
+                    exists: true,
+                    type: constants.MESSAGE_ERROR,
+                }
+            });
+        } else {
+            this.props.onAdd(this.state.reminder);
+            this.setState({
+                reminder: {
+                    ...this.state.reminder,
+                    message: "",
+                },
+                error: {
+                    ...this.state.error,
+                    exists: false,
+                    type: "",
+                }
+            });
+        }
+
     }
     
     render() {
         return (
             <div className={styles.AddReminder}>
-                <div className={styles.Container}>
-                    <Message value={this.state.reminder.message} onChange={this.changeMessage} />
-                
-                    <div className={styles.Container}>
+                <div className={styles.RemindMeContainer}>
+                    <Typography align="center" type="body">Remind me to:</Typography>
+                </div>
+
+                <div className={styles.InputContainer}>
+                    <Message erorr={this.state.error.exists} type={this.state.error.type} value={this.state.reminder.message} onChange={this.changeMessage} />
+
+                    <div className={styles.OptionsContainer}>
                         <ReminderOptions onChange={this.changeMode} />
                         <TimeOptions 
                         onChangeTimeIncrement={this.changeTimeIncrement} 
@@ -89,8 +124,12 @@ class AddReminder extends Component {
                         />
                     </div>
                 </div>
-            
-                <Button onClick={this.addReminder}>Add Reminder</Button>
+
+                <div className={styles.ButtonContainer}>
+                    <Button className={styles.AddReminderButton} onClick={this.addReminder}>
+                        <PlusIcon />
+                    </Button>
+                </div>
             </div>
         );
     }

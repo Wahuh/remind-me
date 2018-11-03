@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "../general/Select";
 import * as constants from "../../constants";
+import styles from "./ReminderOptions.css";
 
 const ReminderOptions = (props) => {
     const options = [
@@ -10,7 +11,7 @@ const ReminderOptions = (props) => {
     ];
 
     return (
-        <Select onChange={props.onChange} options={options} />
+        <Select className={styles.ReminderOptions} onChange={props.onChange} options={options} />
     );
 }
 
