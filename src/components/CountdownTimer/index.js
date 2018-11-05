@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styles from "./CountdownTimer";
+import Typography from "../general/Typography";
 import addMinutes from "date-fns/add_minutes";
 import addSeconds from "date-fns/add_seconds";
 import addHours from "date-fns/add_hours";
@@ -22,25 +23,29 @@ class CountdownTimer extends Component {
     }
 
     componentDidMount() {
+        const onSend = this.props.onSend;
         const countdownDate = this.calculateCountdownDate();
         console.log(countdownDate);
         const difference = differenceInMilliseconds(countdownDate, Date.now());
         const setTimeRemaining = this.setTimeRemaining;
         setTimeRemaining(difference);
         const interval = 1000;
-        let expectedDifference = difference - interval;
+        let expectedDifference = difference; //- interval;
 
         setTimeout(step, interval);
 
         function step() {
             const deltaTime = differenceInMilliseconds(countdownDate, Date.now());
             if (deltaTime > 0) {
+                console.log(expectedDifference, "expectedDiff");
                 setTimeRemaining(deltaTime);
                 const elapsed = expectedDifference - deltaTime;
-                console.log(elapsed, "elapsed");
+                console.log(elapsed, "milliseconds have passed");
                 expectedDifference -= elapsed;
                 console.log(expectedDifference, "expected");
                 setTimeout(step, interval - elapsed);
+            } else {
+                onSend(countdownDate);
             }
         }
     }
@@ -53,11 +58,16 @@ class CountdownTimer extends Component {
     }
 
     setTimeRemaining(milliseconds) {
-        let remainder = milliseconds;
+        let timeRemaining = milliseconds;
         let days;
         let hours;
         let minutes;
         let seconds;
+
+        let calcDays = true;
+        let calcHours = true;
+        let calcMinutes = true;
+        let calcSeconds = true;
 
         function normalizeTime(time) {
             if (time < 10) {
@@ -67,38 +77,45 @@ class CountdownTimer extends Component {
             }
         }
 
-        if (remainder >= constants.DAYS_TO_MS) {
-            days = Math.floor(remainder / constants.DAYS_TO_MS);
-            remainder %= constants.DAYS_TO_MS;
-        } else {
-            days = "00";
+        if (calcDays) {
+            if (timeRemaining >= constants.DAYS_TO_MS) {
+                days = Math.floor(timeRemaining / constants.DAYS_TO_MS);
+                timeRemaining %= constants.DAYS_TO_MS;
+            } else {
+                calcDays = false;
+                days = "00";
+            }
         }
 
-        if (remainder >= constants.HOURS_TO_MS) {
-            hours = normalizeTime(Math.floor(remainder / constants.HOURS_TO_MS));
-            remainder %= constants.HOURS_TO_MS;
-        } else {
-            hours = "00";
+        if (calcHours) {
+            if (timeRemaining >= constants.HOURS_TO_MS) {
+                hours = normalizeTime(Math.floor(timeRemaining / constants.HOURS_TO_MS));
+                timeRemaining %= constants.HOURS_TO_MS;
+            } else {
+                calcHours = false;
+                hours = "00";
+            }
         }
 
-        if (remainder >= constants.MINUTES_TO_MS) {
-            minutes = normalizeTime(Math.floor(remainder / constants.MINUTES_TO_MS));
-            remainder %= constants.MINUTES_TO_MS;
-        } else {
-            minutes = "00";
+        if (calcMinutes) {
+            if (timeRemaining >= constants.MINUTES_TO_MS) {
+                minutes = normalizeTime(Math.floor(timeRemaining / constants.MINUTES_TO_MS));
+                timeRemaining %= constants.MINUTES_TO_MS;
+            } else {
+                calcMinutes = false;
+                minutes = "00";
+            }
         }
 
-        if (remainder >= constants.SECONDS_TO_MS) {
-            console.log(remainder);
-            seconds = normalizeTime(Math.floor(remainder / constants.SECONDS_TO_MS));
-            console.log(seconds, "seconds");
-            remainder %= constants.SECONDS_TO_MS;
-            console.log("after remainder", remainder);
-        } else {
-            seconds = "00";
+        if (calcSeconds) {
+            if (timeRemaining >= constants.SECONDS_TO_MS) {
+                seconds = normalizeTime(Math.floor(timeRemaining / constants.SECONDS_TO_MS));
+                timeRemaining %= constants.SECONDS_TO_MS;
+            } else {
+                calcSeconds = false;
+                seconds = "00";
+            }
         }
-
-        //if days is undef... etc
 
         this.setState({
             days: days,
@@ -128,23 +145,23 @@ class CountdownTimer extends Component {
             <div className={styles.CountdownTimer}>
 
                 <div className={styles.TimeContainer}>
-                    <div>{days}</div>
-                    <div>d:</div>
+                    <Typography type="body">{days}</Typography>
+                    <Typography type="body">d:</Typography>
                 </div>
 
                 <div className={styles.TimeContainer}>
-                    <div>{hours}</div>
-                    <div>h:</div>
+                    <Typography type="body">{hours}</Typography>
+                    <Typography type="body">h:</Typography>
                 </div>
 
                 <div className={styles.TimeContainer}>
-                    <div>{minutes}</div>
-                    <div>m:</div>
+                    <Typography type="body">{minutes}</Typography>
+                    <Typography type="body">m:</Typography>
                 </div>
                 
                 <div className={styles.TimeContainer}>
-                    <div>{seconds}</div>
-                    <div>s</div>
+                    <Typography type="body">{seconds}</Typography>
+                    <Typography type="body">s</Typography>
                 </div>
 
             </div>
