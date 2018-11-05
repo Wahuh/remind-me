@@ -28,7 +28,9 @@ class App extends Component {
 
                 <div className={styles.Container}>
                     <AddReminder onAdd={this.addReminder} />
-                    <ReminderList reminders={this.state.reminders} />
+                    <div className={styles.ReminderListContainer}>
+                        <ReminderList reminders={this.state.reminders} />
+                    </div>
                 </div>
             </div>
         );

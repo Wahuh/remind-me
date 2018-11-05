@@ -1,1 +1,1 @@
-# remind-me
+# remind-me if someone disables notifications try again
