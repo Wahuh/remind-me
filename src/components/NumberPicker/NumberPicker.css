@@ -1,13 +1,7 @@
 .NumberPicker {
-
-}
-
-.NumberPickerContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 0.5rem;
+    flex-grow: 2;
+    flex-shrink: 3;
+    min-width: 0;
 }
 
 .AddButton {

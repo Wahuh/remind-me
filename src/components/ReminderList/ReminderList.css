@@ -1,10 +1,9 @@
 .ReminderList {
-    width: 100%;
     background-color: #2f3640;
-    padding: 0;
     margin: 0;
+    padding: 0;
     overflow-y: auto;
-    height: 80vh;
+    overflow-x: hidden;
 }
 
 .ReminderItem {

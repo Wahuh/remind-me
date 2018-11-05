@@ -44,16 +44,7 @@ class NumberPicker extends Component {
 
     render() {
         return (
-            <div className={styles.NumberPickerContainer}>
-                <Input id="NumberPicker" className={styles.NumberPicker} value={this.state.value} onChange={this.handleChange} type="number" min={0}/>
-                <Button className={styles.AddButton} onClick={this.plus}>
-                    <PlusIcon />
-                </Button>
-    
-                <Button className={styles.MinusButton} onClick={this.minus}>
-                    <MinusIcon />
-                </Button>
-            </div>
+            <Input id="NumberPicker" className={styles.NumberPicker} value={this.state.value} onChange={this.handleChange} type="number" min={0}/>
         );
     }
 }

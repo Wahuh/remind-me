@@ -8,7 +8,8 @@ const Typography = (props) => {
     //};
     //style={color}
     const style = {
-        textAlign: props.align
+        textAlign: props.align,
+        color: props.color,
     }
 
     let text = props.children;

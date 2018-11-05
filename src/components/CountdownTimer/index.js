@@ -141,23 +141,23 @@ class CountdownTimer extends Component {
             <div className={styles.CountdownTimer}>
 
                 <div className={styles.TimeContainer}>
-                    <Typography type="body">{days}</Typography>
-                    <Typography type="body">d:</Typography>
+                    <Typography type="subtitle2">{days}</Typography>
+                    <Typography type="subtitle2">d:</Typography>
                 </div>
 
                 <div className={styles.TimeContainer}>
-                    <Typography type="body">{hours}</Typography>
-                    <Typography type="body">h:</Typography>
+                    <Typography type="subtitle2">{hours}</Typography>
+                    <Typography type="subtitle2">h:</Typography>
                 </div>
 
                 <div className={styles.TimeContainer}>
-                    <Typography type="body">{minutes}</Typography>
-                    <Typography type="body">m:</Typography>
+                    <Typography type="subtitle2">{minutes}</Typography>
+                    <Typography type="subtitle2">m:</Typography>
                 </div>
                 
                 <div className={styles.TimeContainer}>
-                    <Typography type="body">{seconds}</Typography>
-                    <Typography type="body">s</Typography>
+                    <Typography type="subtitle2">{seconds}</Typography>
+                    <Typography type="subtitle2">s</Typography>
                 </div>
 
             </div>

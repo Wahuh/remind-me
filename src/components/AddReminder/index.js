@@ -5,9 +5,7 @@ import TimeOptions from "../TimeOptions";
 import Message from "../Message";
 import styles from "./AddReminder.css";
 import PlusIcon from "../general/PlusIcon";
-import Typography from "../general/Typography";
 import * as constants from "../../constants";
-
 
 class AddReminder extends Component {
     constructor(props) {
@@ -106,12 +104,10 @@ class AddReminder extends Component {
     render() {
         return (
             <div className={styles.AddReminder}>
-                <div className={styles.RemindMeContainer}>
-                    <Typography align="center" type="body">Remind me to:</Typography>
-                </div>
-
                 <div className={styles.InputContainer}>
-                    <Message erorr={this.state.error.exists} type={this.state.error.type} value={this.state.reminder.message} onChange={this.changeMessage} />
+                    <div className={styles.MessageContainer}>
+                        <Message erorr={this.state.error.exists} type={this.state.error.type} value={this.state.reminder.message} onChange={this.changeMessage} />
+                    </div>
 
                     <div className={styles.OptionsContainer}>
                         <ReminderOptions onChange={this.changeMode} />

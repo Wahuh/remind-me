@@ -25,9 +25,9 @@ const TimeOptions = (props) => {
         }
     
         return (
-            <div className={styles.TimeOptions}>
+            <Fragment>
                 {picker}
-            </div>
+            </Fragment>
         );
 }
 
