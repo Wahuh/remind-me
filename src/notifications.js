@@ -10,17 +10,33 @@ export const requestNotificationPermission = () => {
             console.log(permission);
         });
     } else if (Notification.permission === "denied") {
-        console.log(Notification.permission);
+        Notification.requestPermission().then((permission) => {
+            console.log(permission);
+        });
     }
 }
 
 export const sendNotification = (date, message) => {
-    const notification = new Notification(
-        "Remind Me",
-        {
-            body: 
-            `${message}
+//     const notification = new Notification(
+//         "Remind Me",
+//         {
+//             body: 
+//             `${message}
+// ${date.toLocaleString()}`,
+//         }
+//     );
+    Notification.requestPermission((permission) => {
+        if (permission === "granted") {
+            navigator.serviceWorker.ready.then((registration) => {
+                registration.showNotification(
+                    "Remind Me",
+                    {
+                        body: 
+                        `${message}
 ${date.toLocaleString()}`,
+                    }
+                );
+            });
         }
-    );
+    });
 }
