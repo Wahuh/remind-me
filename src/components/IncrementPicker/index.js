@@ -9,7 +9,6 @@ const IncrementPicker = (props) => {
         {name: "seconds", value: constants.SECONDS},
         {name: "hours", value: constants.HOURS},
         {name: "days", value: constants.DAYS},
-        {name: "years - really?", value: constants.YEARS}
     ]
 
     return (

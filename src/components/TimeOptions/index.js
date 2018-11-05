@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import * as constants from "../../constants";
 import NumberPicker from "../NumberPicker";
 import IncrementPicker from "../IncrementPicker";
-import styles from "./TimeOptions.css";
 
 const TimeOptions = (props) => {
         let picker;

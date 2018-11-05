@@ -7,6 +7,7 @@ import addHours from "date-fns/add_hours";
 import addDays from "date-fns/add_days";
 import differenceInMilliseconds from "date-fns/difference_in_milliseconds";
 import * as constants from "../../constants";
+import { isThisSecond } from "date-fns";
 
 class CountdownTimer extends Component {
     constructor(props) {
@@ -16,9 +17,14 @@ class CountdownTimer extends Component {
             hours: "00",
             minutes: "00",
             seconds: "00",
+            showDays: false,
+            showHours: false,
+            showMinutes: false,
+            showSeconds: true,
         };
         this.calculateCountdownDate = this.calculateCountdownDate.bind(this);
         this.setTimeRemaining = this.setTimeRemaining.bind(this);
+        this.configureDisplay = this.configureDisplay.bind(this);
         this.stop = this.stop.bind(this);
     }
 
@@ -26,7 +32,10 @@ class CountdownTimer extends Component {
         const onSend = this.props.onSend;
         const countdownDate = this.calculateCountdownDate();
         const difference = differenceInMilliseconds(countdownDate, Date.now());
+        console.log(difference,"diff1");
         const setTimeRemaining = this.setTimeRemaining;
+        this.configureDisplay(difference);
+        console.log(difference, "diff2");
         setTimeRemaining(difference);
         const interval = 1000;
         let expectedDifference = difference; //- interval;
@@ -44,6 +53,39 @@ class CountdownTimer extends Component {
                 onSend(countdownDate);
             }
         }
+    }
+
+    configureDisplay(milliseconds) {
+        let timeRemaining = milliseconds;
+        console.log(timeRemaining, "timeremaining")
+
+        if (timeRemaining >= constants.DAYS_TO_MS) {
+            timeRemaining %= constants.DAYS_TO_MS;
+            this.setState({
+                ...this.state,
+                showDays: true,
+                showHours: true,
+                showMinutes: true,
+            });
+        }
+
+        if (timeRemaining >= constants.HOURS_TO_MS) {
+            timeRemaining %= constants.HOURS_TO_MS;
+            this.setState({
+                ...this.state,
+                showHours: true,
+                showMinutes: true,
+            });
+        }
+
+        if (timeRemaining >= constants.MINUTES_TO_MS) {
+            timeRemaining %= constants.MINUTES_TO_MS;
+            this.setState({
+                ...this.state,
+                showMinutes: true,
+            });
+        }
+        console.log(this.state, "config");
     }
 
     componentWillUnmount() {
@@ -139,22 +181,27 @@ class CountdownTimer extends Component {
         const {seconds, minutes, hours, days} = this.state;
         return (
             <div className={styles.CountdownTimer}>
+                {this.state.showDays && (
+                    <div className={styles.TimeContainer}>
+                        <Typography type="subtitle2">{days}</Typography>
+                        <Typography type="subtitle2">d:</Typography>
+                    </div>
+                )}
 
-                <div className={styles.TimeContainer}>
-                    <Typography type="subtitle2">{days}</Typography>
-                    <Typography type="subtitle2">d:</Typography>
-                </div>
+                {this.state.showHours && (
+                    <div className={styles.TimeContainer}>
+                        <Typography type="subtitle2">{hours}</Typography>
+                        <Typography type="subtitle2">h:</Typography>
+                    </div>
+                )}
 
-                <div className={styles.TimeContainer}>
-                    <Typography type="subtitle2">{hours}</Typography>
-                    <Typography type="subtitle2">h:</Typography>
-                </div>
+                {this.state.showMinutes && (
+                    <div className={styles.TimeContainer}>
+                        <Typography type="subtitle2">{minutes}</Typography>
+                        <Typography type="subtitle2">m:</Typography>
+                    </div>
+                )}
 
-                <div className={styles.TimeContainer}>
-                    <Typography type="subtitle2">{minutes}</Typography>
-                    <Typography type="subtitle2">m:</Typography>
-                </div>
-                
                 <div className={styles.TimeContainer}>
                     <Typography type="subtitle2">{seconds}</Typography>
                     <Typography type="subtitle2">s</Typography>
