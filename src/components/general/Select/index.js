@@ -7,7 +7,7 @@ const Select = (props) => {
         className += ` ${props.className}`;
     }
 
-    const options = props.options.map(option => <option value={option.value}>{option.name}</option>);
+    const options = props.options.map(option => <option key={option.value} value={option.value}>{option.name}</option>);
 
     return (
         <select onChange={props.onChange} className={className}>

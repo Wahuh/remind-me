@@ -1,6 +1,6 @@
 .RemindMeContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -12,5 +12,18 @@
 .RemindMe {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    text-align: center;
+}
+
+.Instructions {
+    display: flex;
+    flex-direction: column;
+}
+
+.AllowNotificationsButton {
+    padding: 1rem;
+    width: 12rem;
+    align-self: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }

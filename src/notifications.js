@@ -7,12 +7,10 @@ export const checkNotificationSupport = () => {
 export const requestNotificationPermission = () => {
     if (Notification.permission === "default") {
         Notification.requestPermission().then((permission) => {
-            console.log(permission);
+            Notification.permission = permission;
         });
     } else if (Notification.permission === "denied") {
-        Notification.requestPermission().then((permission) => {
-            console.log(permission);
-        });
+        console.log(Notification.permission);
     }
 }
 
