@@ -5,15 +5,15 @@ self.addEventListener("install", (event) => {
     workbox.precaching.precacheAndRoute([
   {
     "url": "index.html",
-    "revision": "36e36fe23829f157b832c028b378ca56"
+    "revision": "815dfcc0c1468bd8398f56405d3d1cef"
   },
   {
-    "url": "src.1dc4e70a.js",
-    "revision": "e63c3f29f30fc0da3642562a685a9d65"
+    "url": "src.92612b0a.js",
+    "revision": "5d269ab85e4272a56ab1aa2ce30c220e"
   },
   {
-    "url": "src.753794ac.css",
-    "revision": "c1d45a170149d16dbbbf16287219e593"
+    "url": "src.c65c45aa.css",
+    "revision": "756ee12c39874c68273957582f451ec4"
   }
 ]);
 

@@ -22,6 +22,7 @@ class Reminder extends Component {
             <div className={styles.Reminder}>
                 <div className={styles.ReminderMessage}>
                     <Typography type="body">{this.state.message}</Typography>
+                    <Typography type="body">&nbsp;in {this.props.timeIncrement} {this.props.incrementType.toLowerCase()}</Typography>
                 </div>
     
                 <div className={styles.ReminderTimer}>
