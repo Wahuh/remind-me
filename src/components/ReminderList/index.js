@@ -9,7 +9,6 @@ const ReminderList = (props) => {
     );
 });
 
-    console.log(reminders)
     return (
         <ul className={styles.ReminderList}>
             {reminders}

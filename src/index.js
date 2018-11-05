@@ -5,10 +5,9 @@ import { checkNotificationSupport } from "./notifications";
 
 
 if ("serviceWorker" in navigator && "PushManager" in window) {
-    navigator.serviceWorker.register("/serviceWorker.js")
-    .then((reg) => {
-        console.log("Service worker registered", reg.scope)
-    }).catch(error => console.log("Error, service worker not registered", error));
+    navigator.serviceWorker.register("./serviceWorker.js")
+    .then(reg => console.log("Service worker registered", reg.scope))
+    .catch(error => console.log("Error, service worker not registered", error));
 }
 
 checkNotificationSupport();

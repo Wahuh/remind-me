@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "parcel src/index.html --open",
-    "build": "parcel build -d docs/ --public-url ./ src/index.html && copy .nojekyll docs"
+    "build": "parcel build -d docs/ --public-url ./ src/index.html && workbox injectManifest && copy .nojekyll docs"
   },
   "repository": {
     "type": "git",

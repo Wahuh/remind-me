@@ -1,4 +1,43 @@
-parcelRequire=function(e,r,n,t){var i="function"==typeof parcelRequire&&parcelRequire,o="function"==typeof require&&require;function u(n,t){if(!r[n]){if(!e[n]){var f="function"==typeof parcelRequire&&parcelRequire;if(!t&&f)return f(n,!0);if(i)return i(n,!0);if(o&&"string"==typeof n)return o(n);var c=new Error("Cannot find module '"+n+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[n][1][r]||r},p.cache={};var l=r[n]=new u.Module(n);e[n][0].call(l.exports,p,l,l.exports,this)}return r[n].exports;function p(e){return u(p.resolve(e))}}u.isParcelRequire=!0,u.Module=function(e){this.id=e,this.bundle=u,this.exports={}},u.modules=e,u.cache=r,u.parent=i,u.register=function(r,n){e[r]=[function(e,r){r.exports=n},{}]};for(var f=0;f<n.length;f++)u(n[f]);if(n.length){var c=u(n[n.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=c:"function"==typeof define&&define.amd?define(function(){return c}):t&&(this[t]=c)}return u}({"oXuJ":[function(require,module,exports) {
-var s="v1";self.addEventListener("install",function(e){e.waitUntil(caches.open(s).then(function(s){return s.addAll(["/dist/index.html","/dist/serviceWorker.js","/dist/serviceWorker.map","/dist/src.7281b79d.map","/dist/src.753794ac.css","/dist/src.ce34fcbf.js"])}))});
-},{}]},{},["oXuJ"], null)
-//# sourceMappingURL=serviceWorker.map
+const version = "v1";
+
+self.addEventListener("install", (event) => {
+    importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.1/workbox-sw.js');
+    workbox.precaching.precacheAndRoute([
+  {
+    "url": "index.html",
+    "revision": "36e36fe23829f157b832c028b378ca56"
+  },
+  {
+    "url": "src.1dc4e70a.js",
+    "revision": "e63c3f29f30fc0da3642562a685a9d65"
+  },
+  {
+    "url": "src.753794ac.css",
+    "revision": "c1d45a170149d16dbbbf16287219e593"
+  }
+]);
+
+    // if (workbox) {
+    // console.log(`Yay! Workbox is loaded 🎉`);
+    // } else {
+    // console.log(`Boo! Workbox didn't load 😬`);
+    // }
+
+    // workbox.routing.registerRoute(
+    //     new RegExp('.*\.js'),
+    //     workbox.strategies.networkFirst()
+    // );
+
+    // event.waitUntil(
+    //     caches.open(version).then((cache) => {
+    //         return cache.addAll([
+    //             "index.html",
+    //             "/dist/serviceWorker.js",
+    //             "/dist/serviceWorker.map",
+    //             "/dist/src.7281b79d.map",
+    //             "/dist/src.753794ac.css",
+    //             "/dist/src.ce34fcbf.js",
+    //         ]);
+    //     })
+    // );
+});

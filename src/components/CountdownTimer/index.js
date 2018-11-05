@@ -25,7 +25,6 @@ class CountdownTimer extends Component {
     componentDidMount() {
         const onSend = this.props.onSend;
         const countdownDate = this.calculateCountdownDate();
-        console.log(countdownDate);
         const difference = differenceInMilliseconds(countdownDate, Date.now());
         const setTimeRemaining = this.setTimeRemaining;
         setTimeRemaining(difference);
@@ -37,12 +36,9 @@ class CountdownTimer extends Component {
         function step() {
             const deltaTime = differenceInMilliseconds(countdownDate, Date.now());
             if (deltaTime > 0) {
-                console.log(expectedDifference, "expectedDiff");
                 setTimeRemaining(deltaTime);
                 const elapsed = expectedDifference - deltaTime;
-                console.log(elapsed, "milliseconds have passed");
                 expectedDifference -= elapsed;
-                console.log(expectedDifference, "expected");
                 setTimeout(step, interval - elapsed);
             } else {
                 onSend(countdownDate);
