@@ -11,7 +11,7 @@ const Message = (props) => {
                 {props.type === constants.MESSAGE_ERROR && <Typography type="body2">Please enter a message</Typography>}
                 {props.type === constants.TIME_ERROR && <Typography type="body2">Please enter a time</Typography>}
             </div>
-            <Input value={props.value} onChange={props.onChange} className={styles.MessageInput} placeholder="Enter a message for yourself" />
+            <Input value={props.value} onEnter={props.onEnter} onChange={props.onChange} className={styles.MessageInput} placeholder="Enter a message" />
         </div>
     );
 }
