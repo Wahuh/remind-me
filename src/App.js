@@ -40,14 +40,28 @@ class App extends Component {
     }
 
     requestNotificationPermissions = () => {
-        console.log(Notification.permission);
-        Notification.requestPermission()
-        .then(permission => {
-            console.log("permission", permission);
-            if (permission === "granted") {
-                this.setState(prevState => ({ ...prevState, hasPermissions: true }));
-            }
-        });
+        try {
+            Notification.requestPermission()
+            .then(permission => {
+                console.log("permission", permission);
+                if (permission === "granted") {
+                    this.setState(prevState => ({ ...prevState, hasPermissions: true }));
+                }
+            });                                                                                                                                          
+        } catch (error) {
+            // Safari doesn't return a promise for requestPermissions and it                                                                                                                                       
+            // throws a TypeError. It takes a callback as the first argument                                                                                                                                       
+            // instead.
+            if (error instanceof TypeError) {
+                Notification.requestPermission(permission => {
+                    if (permission === "granted") {
+                        this.setState(prevState => ({ ...prevState, hasPermissions: true }));
+                    }
+                });
+            } else {
+                throw error;                                                                                                                                                                             
+            }                                                                                                                                                                                                      
+        }      
     }
 
     addReminder = reminder => {
