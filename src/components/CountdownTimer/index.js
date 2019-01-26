@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import styles from "./CountdownTimer";
-import Typography from "../general/Typography";
 import addMinutes from "date-fns/add_minutes";
 import addSeconds from "date-fns/add_seconds";
 import addHours from "date-fns/add_hours";
 import addDays from "date-fns/add_days";
 import differenceInMilliseconds from "date-fns/difference_in_milliseconds";
 import * as constants from "../../constants";
-import { isThisSecond } from "date-fns";
 
 class CountdownTimer extends Component {
     constructor(props) {
@@ -50,6 +48,7 @@ class CountdownTimer extends Component {
                 expectedDifference -= elapsed;
                 setTimeout(step, interval - elapsed);
             } else {
+                console.log("isSendingNotification", countdownDate);
                 onSend(countdownDate);
             }
         }
@@ -183,30 +182,29 @@ class CountdownTimer extends Component {
             <div className={styles.CountdownTimer}>
                 {this.state.showDays && (
                     <div className={styles.TimeContainer}>
-                        <Typography type="subtitle2">{days}</Typography>
-                        <Typography type="subtitle2">d:</Typography>
+                        <p>{days}</p>
+                        <p>d:</p>
                     </div>
                 )}
 
                 {this.state.showHours && (
                     <div className={styles.TimeContainer}>
-                        <Typography type="subtitle2">{hours}</Typography>
-                        <Typography type="subtitle2">h:</Typography>
+                        <p>{hours}</p>
+                        <p>h:</p>
                     </div>
                 )}
 
                 {this.state.showMinutes && (
                     <div className={styles.TimeContainer}>
-                        <Typography type="subtitle2">{minutes}</Typography>
-                        <Typography type="subtitle2">m:</Typography>
+                        <p>{minutes}</p>
+                        <p>m:</p>
                     </div>
                 )}
 
                 <div className={styles.TimeContainer}>
-                    <Typography type="subtitle2">{seconds}</Typography>
-                    <Typography type="subtitle2">s</Typography>
+                    <p>{seconds}</p>
+                    <p>s</p>
                 </div>
-
             </div>
         );
     }
