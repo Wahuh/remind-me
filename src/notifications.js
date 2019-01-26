@@ -22,9 +22,13 @@ export const sendNotification = (date, message) => {
     };
 
     if (navigator.serviceWorker) {
-        navigator.serviceWorker.ready.then(registration => {
-            registration.showNotification("Remind Me", options);
-        });
+        try {
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification("Remind Me", options);
+            });
+        } catch(error) {
+            const notification = new Notification("Remind Me", options);
+        }
     } else {
         const notification = new Notification("Remind Me", options);
     }
