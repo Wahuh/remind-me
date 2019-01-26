@@ -2,11 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 
-
-// if ("serviceWorker" in navigator && "PushManager" in window) {
-//     navigator.serviceWorker.register("./serviceWorker.js")
-//     .then(reg => console.log("Service worker registered", reg.scope))
-//     .catch(error => console.log("Error, service worker not registered", error));
-// }
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js");
+    });
+}
 
 ReactDOM.render(<App />, document.getElementById("root"));
