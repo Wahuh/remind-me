@@ -1,0 +1,9 @@
+.PermissionsRequest button {
+    background-color: #2196f3;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+.PermissionsRequest button:hover {
+    background-color: #1976d2;
+}
