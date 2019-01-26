@@ -9,7 +9,6 @@ const TimeOptions = ({
     onChangeIncrementType, 
     onChangeTimeIncrement
 }) => {
-        console.log(timeIncrement, "TIME");
         return (
             <Fragment>
                 <NumberPicker value={timeIncrement} onChange={onChangeTimeIncrement} />

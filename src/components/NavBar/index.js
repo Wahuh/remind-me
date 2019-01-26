@@ -14,7 +14,6 @@ class NavBar extends Component {
 
     expand = () => {
         this.setState(prevState => ({ expand: !prevState.expand }))
-        console.log(this.state.expand);
     }
 
     render() {
