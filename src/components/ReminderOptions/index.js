@@ -6,8 +6,8 @@ import styles from "./ReminderOptions.css";
 const ReminderOptions = (props) => {
     const options = [
         {name: "in", value: constants.IN},
-        {name: "every", value: constants.EVERY},
-        {name: "at", value: constants.AT}
+        // {name: "every", value: constants.EVERY},
+        // {name: "at", value: constants.AT}
     ];
 
     return (
