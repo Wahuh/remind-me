@@ -15,25 +15,18 @@ export const requestNotificationPermission = () => {
 }
 
 export const sendNotification = (date, message) => {
+    const options = {
+        body: 
+        `${message}
+    ${date.toLocaleString()}`,
+    };
+
     if (navigator.serviceWorker) {
         navigator.serviceWorker.ready.then(registration => {
-            registration.showNotification(
-                "Remind Me",
-                {
-                    body: 
-                    `${message}
-${date.toLocaleString()}`,
-                }
-            );
+            registration.showNotification("Remind Me", options);
         });
     } else {
-        const notification = new Notification(
-            "Remind Me",
-            {
-                body: 
-                `${message}
-    ${date.toLocaleString()}`,
-            }
-        );
+        const notification = new Notification("Remind Me", options);
     }
 }
+
