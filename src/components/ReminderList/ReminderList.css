@@ -1,15 +1,7 @@
 .ReminderList {
-    background-color: #2f3640;
+    width: 100%;
     margin: 0;
     padding: 0;
     overflow-y: auto;
-}
-
-.ReminderItem {
-    list-style: none;
-    margin: 0 1rem 1rem;
-}
-
-.ReminderItem:first-child {
-    margin: 1rem 1rem 1rem;
+    margin-top: 1rem;
 }
