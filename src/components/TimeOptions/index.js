@@ -3,29 +3,17 @@ import * as constants from "../../constants";
 import NumberPicker from "../NumberPicker";
 import IncrementPicker from "../IncrementPicker";
 
-const TimeOptions = (props) => {
-        let picker;
-        const { 
-            mode, 
-            timeIncrement, 
-            onChangeIncrementType, 
-            onChangeTimeIncrement
-        } = props;
-
-        if (mode === constants.AT) {
-
-        } else {
-            picker = (
-                <Fragment>
-                    <NumberPicker value={timeIncrement} onChange={onChangeTimeIncrement} />
-                    <IncrementPicker onChange={onChangeIncrementType}/>
-                </Fragment>
-            );
-        }
-    
+const TimeOptions = ({ 
+    mode, 
+    timeIncrement, 
+    onChangeIncrementType, 
+    onChangeTimeIncrement
+}) => {
+        console.log(timeIncrement, "TIME");
         return (
             <Fragment>
-                {picker}
+                <NumberPicker value={timeIncrement} onChange={onChangeTimeIncrement} />
+                <IncrementPicker onChange={onChangeIncrementType}/>
             </Fragment>
         );
 }

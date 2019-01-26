@@ -38,11 +38,11 @@ class AddReminder extends Component {
         });
     }
 
-    changeTimeIncrement = value => {
+    changeTimeIncrement = event => {
         this.setState({
             reminder: {
                 ...this.state.reminder,
-                timeIncrement: value,
+                timeIncrement: event.currentTarget.value,
             }
         });
     }
@@ -72,6 +72,7 @@ class AddReminder extends Component {
             this.setState({
                 reminder: {
                     ...this.state.reminder,
+                    timeIncrement: 0,
                     message: "",
                 },
                 validation: {
@@ -90,19 +91,19 @@ class AddReminder extends Component {
     }
 
     render() {
-        const { validation } = this.state;
+        const { validation, reminder } = this.state;
         return (
             <Fragment>
                 <div className={styles.AddReminder}>
                     <div className={styles.InputContainer}>
-                        <Message onEnter={this.addReminder} onChange={this.changeMessage} />
+                        <Message value={reminder.message} onEnter={this.addReminder} onChange={this.changeMessage} />
 
                         <div className={styles.OptionsContainer}>
                             <ReminderOptions onChange={this.changeMode} />
                             <TimeOptions 
                             onChangeTimeIncrement={this.changeTimeIncrement} 
                             mode={this.state.mode} 
-                            timeIncrement={this.state.reminder.timeIncrement}
+                            timeIncrement={reminder.timeIncrement}
                             onChangeIncrementType={this.changeIncrementType}
                             incrementType={this.state.reminder.incrementType}
                             />
