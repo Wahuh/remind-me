@@ -4,8 +4,14 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    background-color: #f5f6fa;
+    width: 100%;
+    background-color: white;
     padding: 1rem;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
+    border-radius: 4px;
+    list-style: none;
+    margin-bottom: 1rem;
+    animation: fadein 0.3s ease-in;
 }
 
 .ReminderMessage {
@@ -15,9 +21,45 @@
     flex-direction: row;
     align-items: center;
     flex-wrap: nowrap;
+    font-family: inherit;
+}
+
+.ReminderMessage p {
+    margin: 0;
 }
 
 .ReminderTimer {
     padding-left: 0.5rem;
     flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Completed {
+    display: flex;
+    flex-direction: row;
+}
+
+.Completed button {
+    background: transparent;
+    fill: red;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Completed p {
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
