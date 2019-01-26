@@ -1,37 +1,74 @@
 import React, { Component } from "react";
+import Countdown from "react-countdown-now";
 import CountdownTimer from "../CountdownTimer";
-import Typography from "../general/Typography";
+import Button from "../general/Button";
+import CloseIcon from "../icons/CloseIcon";
 import { sendNotification } from "../../notifications";
 import styles from "./Reminder.css";
+import addMinutes from "date-fns/add_minutes";
+import addSeconds from "date-fns/add_seconds";
+import addHours from "date-fns/add_hours";
+import addDays from "date-fns/add_days";
+import differenceInMilliseconds from "date-fns/difference_in_milliseconds";
+import * as constants from "../../constants";
 
 class Reminder extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            message: props.message
-        }
-        this.sendReminder = this.sendReminder.bind(this);
+    state = { 
+        shouldRender: true,
+        date: this.calculateCountdownDate()
     }
 
-    sendReminder(date) {
-        sendNotification(date, this.state.message);
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.shouldRender != this.state.shouldRender) {
+            return true;
+        }
+        return false;
+    }
+
+    sendReminder = () => {
+        sendNotification(this.state.date, this.props.message);
+    }
+
+    deleteReminder = () => {
+        this.setState({ shouldRender: false });
+    }
+
+    calculateCountdownDate() {
+        const timeIncrement = this.props.timeIncrement;
+        switch(this.props.incrementType) {
+            case constants.MINUTES:
+                return addMinutes(Date.now(), timeIncrement);
+            case constants.SECONDS:
+                return addSeconds(Date.now(), timeIncrement);
+            case constants.HOURS:
+                return addHours(Date.now(), timeIncrement);
+            case constants.DAYS:
+                return addDays(Date.now(), timeIncrement);
+        }
     }
 
     render() {
+        const { shouldRender, date } = this.state;
+        const { timeIncrement, incrementType, message } = this.props;
         return (
-            <div className={styles.Reminder}>
+            shouldRender ? (
+            <li className={styles.Reminder}>
                 <div className={styles.ReminderMessage}>
-                    <Typography type="body">{this.state.message}</Typography>
-                    <Typography type="body">&nbsp;in {this.props.timeIncrement} {this.props.incrementType.toLowerCase()}</Typography>
+                    <p>{message} in <strong>{timeIncrement} {timeIncrement == 1 ? incrementType.slice(0, -1).toLowerCase() : incrementType.toLowerCase()}</strong></p>
                 </div>
-    
+
                 <div className={styles.ReminderTimer}>
-                    <CountdownTimer 
-                    onSend={this.sendReminder} 
-                    incrementType={this.props.incrementType} 
-                    timeIncrement={this.props.timeIncrement} />
+                    <Countdown onComplete={this.sendReminder} date={date}>
+                        <div className={styles.Completed}>
+                            <p>Completed</p>
+                            <Button onClick={this.deleteReminder}>
+                                <CloseIcon />
+                            </Button>
+                        </div> 
+                    </Countdown>
                 </div>
-            </div>
+            </li>
+            ) : null
         );
     }
 }
